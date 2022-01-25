@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 class GameManager : MonoBehaviour
 {
     [SerializeField] private ObjectView _playerView;
+    [SerializeField] private List<LevelView> _levelViews;
 
     [Header("Player characteristics")]
     [Range(0, 25)]
@@ -17,13 +19,8 @@ class GameManager : MonoBehaviour
         _playerController = new PlayerController(_playerView);
     }
 
-    private void Update()
-    {
-       
-    }
-
     private void FixedUpdate()
     {
-        _playerController.MoveSideways(_horizontalSensitivity, _verticalVelocity);
+        _playerController.Move(_horizontalSensitivity, _verticalVelocity);
     }
 }

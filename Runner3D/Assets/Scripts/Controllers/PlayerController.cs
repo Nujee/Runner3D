@@ -12,7 +12,7 @@ public class PlayerController
         _playerView = playerView;
     }
 
-    public void MoveSideways(float horizontalSensitivity, float verticalVelocity)
+    public void Move(float horizontalSensitivity, float verticalVelocity)
     {
         var horizontalVelocity = Input.GetAxis(horizontal) * horizontalSensitivity;
         var movement = new Vector3(horizontalVelocity, 0, verticalVelocity) * Time.deltaTime;

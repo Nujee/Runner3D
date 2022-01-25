@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class ObjectView : MonoBehaviour
@@ -18,5 +17,13 @@ public class ObjectView : MonoBehaviour
 
         if (gameObject.GetComponent<Rigidbody>())
             _rigidbody = gameObject.GetComponent<Rigidbody>();
+    }
+
+    public Action<ObjectView> OnContact { get; set; }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ObjectView temp = collision.gameObject.GetComponent<ObjectView>();
+        OnContact?.Invoke(temp);
     }
 }
