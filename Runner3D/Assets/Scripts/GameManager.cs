@@ -19,6 +19,11 @@ class GameManager : MonoBehaviour
 
     private void Update()
     {
+       
+    }
+
+    private void FixedUpdate()
+    {
         _playerController.MoveSideways(_horizontalSensitivity, _verticalVelocity);
     }
 }
