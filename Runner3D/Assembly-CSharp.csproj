@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\ObjectView.cs" />
     <Compile Include="Assets\Scripts\ObstacleController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UIController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Runner3DRepo/Runner3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
