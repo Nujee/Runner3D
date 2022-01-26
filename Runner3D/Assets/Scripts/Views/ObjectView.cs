@@ -21,9 +21,9 @@ public class ObjectView : MonoBehaviour
 
     public Action<ObjectView> OnContact { get; set; }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider other)
     {
-        ObjectView temp = collision.gameObject.GetComponent<ObjectView>();
+        ObjectView temp = other.gameObject.GetComponent<ObjectView>();
         OnContact?.Invoke(temp);
     }
 }

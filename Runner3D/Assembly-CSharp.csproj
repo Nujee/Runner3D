@@ -64,13 +64,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Controllers\GameScreenController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LoseScreenController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ObstacleController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PickUpScoreController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\WinScreenController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\Views\LevelView.cs" />
     <Compile Include="Assets\Scripts\Views\ObjectView.cs" />
+    <Compile Include="Assets\Scripts\Views\UIView.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Runner3DRepo/Runner3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
