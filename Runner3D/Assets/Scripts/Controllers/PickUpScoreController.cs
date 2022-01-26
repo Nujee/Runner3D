@@ -24,11 +24,13 @@ public class PickUpScoreController : IDisposable
         {
             Score++;
 
-            var allMeshes = contactView.gameObject.GetComponentsInChildren<MeshRenderer>();
-            var collider = contactView._collider;
+            // var allMeshes = contactView.gameObject.GetComponentsInChildren<MeshRenderer>();
+            // var collider = contactView._collider;
 
-            allMeshes.MakeInvisible();
-            collider.MakeNoninteractive();
+            // contactView.IsVisible(false);
+            // contactView.IsCollidable(false);
+
+            contactView.IsInteractive(false);
         }
     }
 

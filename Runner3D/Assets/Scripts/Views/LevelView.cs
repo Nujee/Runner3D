@@ -9,4 +9,9 @@ public class LevelView : MonoBehaviour
     public List<ObjectView> _pickUpViews;
     public Transform _startPosition;
     public ObjectView _finishView;
+
+    public void IsActive(bool isActive)
+    {
+        _activator.SetActive(isActive);
+    }
 }

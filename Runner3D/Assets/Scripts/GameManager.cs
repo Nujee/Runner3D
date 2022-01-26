@@ -22,7 +22,7 @@ class GameManager : MonoBehaviour
     private void Start()
     {
         _playerController = new PlayerController(_playerView);
-        _pickUpScoreController = new PickUpScoreController(_playerView, _levelViews[1]._pickUpViews);
+        _pickUpScoreController = new PickUpScoreController(_playerView, _levelViews[0]._pickUpViews);
         _gameScreenController = new GameScreenController(_gameScreenView, _pickUpScoreController);
     }
     
