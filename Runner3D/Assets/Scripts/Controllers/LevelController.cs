@@ -5,42 +5,46 @@ using UnityEngine;
 public class LevelController
 {
     private List<LevelView> _levelViews;
-    private int _currentLevelIndex = 0;
+    private int _currentLevelIndex;
     private int _finalLevelIndex;
 
+    public List<LevelView> LevelViews { get => _levelViews; set => _levelViews = value; }
     public int CurrentLevelIndex { get => _currentLevelIndex; set => _currentLevelIndex = value; }
 
-    public LevelController (List<LevelView> levelViews)
+    public LevelController (List<LevelView> levelViews, int startLevelIndex = 2)
     {
-        _levelViews = levelViews;
+        LevelViews = levelViews;
         _finalLevelIndex = levelViews.Count - 1;
+        CurrentLevelIndex = startLevelIndex;
+
+        LoadLevel(CurrentLevelIndex);
     }
 
-    private void RestartLevel(int currentLevelIndex)
+    public void RestartLevel()
     {
-        LoadLevel(currentLevelIndex);
+        LoadLevel(CurrentLevelIndex);
     }
 
-    private void MoveToNextLevel(int currentLevelIndex)
+    public void MoveToNextLevel()
     {
-        LoadLevel(currentLevelIndex == _finalLevelIndex ? 0 : currentLevelIndex++);
+        LoadLevel(CurrentLevelIndex == _finalLevelIndex ? 0 : CurrentLevelIndex++);
     }
 
     private void LoadLevel(int levelIndex)
     {
-        for (int i = 0; i < _levelViews.Count; i++)
+        for (int i = 0; i < LevelViews.Count; i++)
         {
             if (i == levelIndex)
             {
-                _levelViews[i].IsActive(true);
-                foreach (ObjectView pickUpView in _levelViews[i]._pickUpViews)
+                LevelViews[i].IsActive(true);
+                foreach (ObjectView pickUpView in LevelViews[i]._pickUpViews)
                 {
                     pickUpView.IsInteractive(true);
                 }
             }
             else
             {
-                _levelViews[i].IsActive(false);
+                LevelViews[i].IsActive(false);
             }
         }
     }

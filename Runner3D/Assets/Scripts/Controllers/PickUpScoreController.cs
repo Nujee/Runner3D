@@ -5,38 +5,34 @@ using UnityEngine;
 public class PickUpScoreController : IDisposable
 {
     private ObjectView _playerView;
+    private LevelController _levelController;
     private List<ObjectView> _pickUpViews;
     private int _score = 0;
 
     public int Score { get => _score; set => _score = value; }
 
-    public PickUpScoreController (ObjectView playerView, List<ObjectView> pickUpViews)
+    public PickUpScoreController (ObjectView playerView, LevelController levelController)
     {
         _playerView = playerView;
-        _pickUpViews = pickUpViews;
+        _pickUpViews = levelController.LevelViews[levelController.CurrentLevelIndex]._pickUpViews;
 
-        _playerView.OnContact += PickUpScored;
+        _playerView.OnContact += OnPickup;
     }
 
-    private void PickUpScored(ObjectView contactView)
+    private void OnPickup(ObjectView contactView)
     {
         if (_pickUpViews.Contains(contactView))
         {
             Score++;
-
-            // var allMeshes = contactView.gameObject.GetComponentsInChildren<MeshRenderer>();
-            // var collider = contactView._collider;
-
-            // contactView.IsVisible(false);
-            // contactView.IsCollidable(false);
-
             contactView.IsInteractive(false);
         }
     }
 
     public void Dispose()
     {
-        _playerView.OnContact -= PickUpScored;
+        _playerView.OnContact -= OnPickup;
     }
+
+    //private void OnScoreChanged
 }
  
