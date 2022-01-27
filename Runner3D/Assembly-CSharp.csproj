@@ -68,7 +68,7 @@
     <Compile Include="Assets\Scripts\Controllers\LevelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LoseScreenController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ObstacleController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PickUpScoreController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PickupScoreController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\UIController.cs" />
     <Compile Include="Assets\Scripts\Controllers\WinScreenController.cs" />

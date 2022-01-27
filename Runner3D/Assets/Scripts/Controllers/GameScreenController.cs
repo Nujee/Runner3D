@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class GameScreenController
 {
-    private UIView _gameScreenView;
-    private PickUpScoreController _pickUpScoreController;
-    private LevelView _currentLevelView;
+    private UIView _gameScreen;
+    private PickupScoreController _pickupScoreController;
+    private LevelView _currentLevel;
 
-    public GameScreenController (UIView gameScreenView, PickUpScoreController pickUpScoreController)
+    public GameScreenController (UIView gameScreen, PickupScoreController pickupScoreController)
     {
-        _gameScreenView = gameScreenView;
-        _pickUpScoreController = pickUpScoreController;
+        _gameScreen = gameScreen;
+        _pickupScoreController = pickupScoreController;
     }
 
     public void Update()
     {
-        _gameScreenView._scoreText.text = "Your score: " + _pickUpScoreController.Score.ToString();
+        _gameScreen._scoreText.text = "Your score: " + _pickupScoreController.Score.ToString();
     }
 }

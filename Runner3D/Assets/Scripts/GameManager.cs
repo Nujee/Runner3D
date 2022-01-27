@@ -3,13 +3,11 @@ using UnityEngine;
 
 class GameManager : MonoBehaviour
 {
-    private int curLevInd = 0;
-
-    [SerializeField] private ObjectView _playerView;
-    [SerializeField] private List<LevelView> _levelViews;
-    [SerializeField] private UIView _gameScreenView;
-    [SerializeField] private UIView _winScreenView;
-    [SerializeField] private UIView _loseScreenView;
+    [SerializeField] private ObjectView _player;
+    [SerializeField] private List<LevelView> _levels;
+    [SerializeField] private UIView _gameScreen;
+    [SerializeField] private UIView _winScreen;
+    [SerializeField] private UIView _loseScreen;
 
     [Header("Player characteristics")]
     [Range(0, 25)]
@@ -18,16 +16,18 @@ class GameManager : MonoBehaviour
     [SerializeField] private float _verticalVelocity = 5f;
 
     private PlayerController _playerController;
-    private PickUpScoreController _pickUpScoreController;
+    private PickupScoreController _pickupScoreController;
     private GameScreenController _gameScreenController;
     private LevelController _levelController;
+    private WinScreenController _winScreenController;
 
     private void Start()
     {
-        _playerController = new PlayerController(_playerView);
-        _levelController = new LevelController(_levelViews);
-        _pickUpScoreController = new PickUpScoreController(_playerView, _levelController);
-        _gameScreenController = new GameScreenController(_gameScreenView, _pickUpScoreController);
+        _playerController = new PlayerController(_player);
+        _levelController = new LevelController(_levels);
+        _pickupScoreController = new PickupScoreController(_player, _levelController);
+        _gameScreenController = new GameScreenController(_gameScreen, _pickupScoreController);
+        _winScreenController = new WinScreenController(_winScreen, _levelController, _player, _pickupScoreController);
     }
     
     private void Update()

@@ -2,35 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUpScoreController : IDisposable
+public class PickupScoreController : IDisposable
 {
-    private ObjectView _playerView;
+    private ObjectView _player;
     private LevelController _levelController;
-    private List<ObjectView> _pickUpViews;
+    private List<ObjectView> _pickups;
     private int _score = 0;
 
     public int Score { get => _score; set => _score = value; }
 
-    public PickUpScoreController (ObjectView playerView, LevelController levelController)
+    public PickupScoreController (ObjectView player, LevelController levelController)
     {
-        _playerView = playerView;
-        _pickUpViews = levelController.LevelViews[levelController.CurrentLevelIndex]._pickUpViews;
+        _player = player;
+        _pickups = levelController.Levels[levelController.CurrentLevelIndex]._pickups;
 
-        _playerView.OnContact += OnPickup;
+        _player.OnContact += OnPickup;
     }
 
-    private void OnPickup(ObjectView contactView)
+
+    private void OnPickup(ObjectView contactObject)
     {
-        if (_pickUpViews.Contains(contactView))
+        if (_pickups.Contains(contactObject))
         {
             Score++;
-            contactView.IsInteractive(false);
+            contactObject.IsInteractive(false);
         }
     }
 
     public void Dispose()
     {
-        _playerView.OnContact -= OnPickup;
+        _player.OnContact -= OnPickup;
     }
 
     //private void OnScoreChanged
