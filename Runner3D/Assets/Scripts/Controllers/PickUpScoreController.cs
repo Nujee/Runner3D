@@ -5,7 +5,6 @@ using UnityEngine;
 public class PickupScoreController : IDisposable
 {
     private ObjectView _player;
-    private LevelController _levelController;
     private List<ObjectView> _pickups;
     private int _score = 0;
 

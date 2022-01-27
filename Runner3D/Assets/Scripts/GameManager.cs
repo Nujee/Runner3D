@@ -19,7 +19,8 @@ class GameManager : MonoBehaviour
     private PickupScoreController _pickupScoreController;
     private GameScreenController _gameScreenController;
     private LevelController _levelController;
-    private WinScreenController _winScreenController;
+    private WinController _winController;
+    private LoseController _loseController;
 
     private void Start()
     {
@@ -27,7 +28,8 @@ class GameManager : MonoBehaviour
         _levelController = new LevelController(_levels);
         _pickupScoreController = new PickupScoreController(_player, _levelController);
         _gameScreenController = new GameScreenController(_gameScreen, _pickupScoreController);
-        _winScreenController = new WinScreenController(_winScreen, _levelController, _player, _pickupScoreController);
+        _winController = new WinController(_player, _levelController, _winScreen, _pickupScoreController);
+        _loseController = new LoseController(_player, _levelController, _loseScreen, _pickupScoreController);
     }
     
     private void Update()

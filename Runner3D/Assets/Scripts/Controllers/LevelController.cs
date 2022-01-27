@@ -11,7 +11,7 @@ public class LevelController
     public List<LevelView> Levels { get => _levels; set => _levels = value; }
     public int CurrentLevelIndex { get => _currentLevelIndex; set => _currentLevelIndex = value; }
 
-    public LevelController (List<LevelView> levels, int startLevelIndex = 1)
+    public LevelController (List<LevelView> levels, int startLevelIndex = 2)
     {
         Levels = levels;
         _finalLevelIndex = levels.Count - 1;
