@@ -2,16 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIController : MonoBehaviour
+public class ObstacleController : MonoBehaviour
 {
-    private GameObject _gameScreen;
-    private GameObject _winScreen;
-    private GameObject _loseScreen;
-
-    private void Awake()
-    {
-        
-    }
     // Start is called before the first frame update
     void Start()
     {

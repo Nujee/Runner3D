@@ -4,24 +4,32 @@ using UnityEngine;
 public class WinController : IDisposable
 {
     private ObjectView _player;
-    private ObjectView _finish;
+    private LevelView _currentLevel;
+    private LevelController _levelController;
     private UIView _winScreen;
     private PickupScoreController _scoreContainer;
     
     public WinController(ObjectView player, LevelController levelController, UIView winScreen,  PickupScoreController pickupScoreController)
     {
-
         _player = player;
-        _finish = levelController.Levels[levelController.CurrentLevelIndex]._finish;
+        _levelController = levelController;
+        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
         _winScreen = winScreen;
         _scoreContainer = pickupScoreController;
 
-        _finish.OnContact += OnShowWinScreen;
+        _currentLevel._finish.OnContact += OnShowWinScreen;
+        _levelController.OnNextLevel += OnSetNextLevelFinish;
+
+        _winScreen._nextLevelButton.onClick.AddListener(HideWinScreen);
+        _winScreen._nextLevelButton.onClick.AddListener(levelController.MoveToNextLevel);
+        _winScreen._nextLevelButton.onClick.AddListener(SetPlayerToStart);
+        _winScreen._nextLevelButton.onClick.AddListener(ResetScore);
     }
 
     public void Dispose()
     {
-        _finish.OnContact -= OnShowWinScreen;
+        _currentLevel._finish.OnContact -= OnShowWinScreen;
+        _levelController.OnNextLevel -= OnSetNextLevelFinish;
     }
 
     private void OnShowWinScreen(ObjectView contactObject)
@@ -37,5 +45,28 @@ public class WinController : IDisposable
         Time.timeScale = 0;
         _winScreen.IsActive(true);
         _winScreen._scoreText.text = "You won! Your total score is " + _scoreContainer.Score.ToString();
+        Debug.Log("WinScreen " + _levelController.CurrentLevelIndex);
     }
+
+    private void OnSetNextLevelFinish()
+    {
+        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
+    }
+
+    private void HideWinScreen()
+    {
+        Time.timeScale = 1;
+        _winScreen.IsActive(false);
+    }
+
+    private void SetPlayerToStart()
+    {
+        _player._transform.position = _currentLevel._startPosition.position;
+    }
+
+    private void ResetScore()
+    {
+        _scoreContainer.Score = 0;
+    }
+
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class PickupScoreController : IDisposable
 {
     private ObjectView _player;
-    private List<ObjectView> _pickups;
+    private LevelController _levelController;
+    private LevelView _currentLevel;
     private int _score = 0;
 
     public int Score { get => _score; set => _score = value; }
@@ -13,26 +14,34 @@ public class PickupScoreController : IDisposable
     public PickupScoreController (ObjectView player, LevelController levelController)
     {
         _player = player;
-        _pickups = levelController.Levels[levelController.CurrentLevelIndex]._pickups;
+        _levelController = levelController;
+        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
 
-        _player.OnContact += OnPickup;
-    }
-
-
-    private void OnPickup(ObjectView contactObject)
-    {
-        if (_pickups.Contains(contactObject))
-        {
-            Score++;
-            contactObject.IsInteractive(false);
-        }
+        _levelController.OnNextLevel += SetNextLevelPickups;
+        _player.OnContact += PickUp;
     }
 
     public void Dispose()
     {
-        _player.OnContact -= OnPickup;
+        _player.OnContact -= PickUp;
+        _levelController.OnNextLevel -= SetNextLevelPickups;
     }
 
-    //private void OnScoreChanged
+    private void SetNextLevelPickups()
+    {
+        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
+    }
+
+    private void PickUp(ObjectView contactObject)
+    {
+        if (_currentLevel._pickups.Contains(contactObject))
+        {
+            Score++;
+            contactObject.gameObject.SetActive(false);
+            //contactObject.IsInteractive(false);
+        }
+    }
+
+
 }
  

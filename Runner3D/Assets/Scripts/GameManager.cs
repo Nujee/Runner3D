@@ -24,7 +24,7 @@ class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _playerController = new PlayerController(_player);
+        _playerController = new PlayerController(_player, _horizontalSensitivity, _verticalVelocity);
         _levelController = new LevelController(_levels);
         _pickupScoreController = new PickupScoreController(_player, _levelController);
         _gameScreenController = new GameScreenController(_gameScreen, _pickupScoreController);
@@ -39,6 +39,6 @@ class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerController.Move(_horizontalSensitivity, _verticalVelocity);
+        _playerController.Update();
     }
 }
