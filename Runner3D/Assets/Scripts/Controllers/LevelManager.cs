@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager
+public class LevelController
 {
     private List<LevelView> _levels;
     private int _currentLevelIndex;
@@ -18,7 +18,7 @@ public class LevelManager
 
     public Action OnNextLevel { get; set; }
 
-    public LevelManager (List<LevelView> levels, int startLevelIndex = 1)
+    public LevelController (List<LevelView> levels, int startLevelIndex = 1)
     {
         Levels = levels;
         _finalLevelIndex = levels.Count - 1;

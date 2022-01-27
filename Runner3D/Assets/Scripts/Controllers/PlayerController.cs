@@ -16,10 +16,10 @@ public class PlayerController
         _verticalVelocity = verticalVelocity;
     }
 
-    public void Update()
+    public void Move(float horizontalSensitivity, float verticalVelocity)
     {
-        var horizontalVelocity = Input.GetAxis(horizontal) * _horizontalSensitivity;
-        var movement = new Vector3(horizontalVelocity, 0, _verticalVelocity) * Time.deltaTime;
+        var horizontalVelocity = Input.GetAxis(horizontal) * horizontalSensitivity;
+        var movement = new Vector3(horizontalVelocity, 0, verticalVelocity) * Time.deltaTime;
         var currentPosition = _playerView._transform.position;
 
         _playerView._rigidbody.MovePosition(currentPosition + movement);

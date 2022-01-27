@@ -3,31 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LoseController : IDisposable
+public class LoseController : IDisposable 
 {
     private ObjectView _player;
     private LevelView _currentLevel;
-    private LevelController _levelController;
+    private LevelManager _levelManager;
     private UIView _loseScreen;
-    private PickupScoreController _scoreContainer;
+    private ScoreContainer _scoreContainer;
 
-    public LoseController(ObjectView player, LevelController levelController, UIView loseScreen, PickupScoreController pickupScoreController)
+    public LoseController(ObjectView player, LevelManager levelManager, UIView loseScreen, ScoreContainer scoreContainer)
     {
         _player = player;
-        _levelController = levelController;
-        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
+        _levelManager = levelManager;
+        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
         _loseScreen = loseScreen;
-        _scoreContainer = pickupScoreController;
+        _scoreContainer = scoreContainer;
 
         _player.OnContact += OnShowLoseScreen;
 
         foreach (ObjectView obstacle in _currentLevel._obstacles)
         {
-            _levelController.OnNextLevel += OnSetNextLevelObstacles;
+            _levelManager.OnNextLevel += OnSetNextLevelObstacles;
         }
 
         _loseScreen._restartButton.onClick.AddListener(HideLoseScreen);
-        _loseScreen._restartButton.onClick.AddListener(_levelController.RestartLevel);
+        _loseScreen._restartButton.onClick.AddListener(_levelManager.RestartLevel);
         _loseScreen._restartButton.onClick.AddListener(SetPlayerToStart);
         _loseScreen._restartButton.onClick.AddListener(ResetScore);
     }
@@ -40,9 +40,11 @@ public class LoseController : IDisposable
         }
     }
 
+    // Updates _currentLevel (increased by 1) since OnNextLevel callback. Otherwise Player will only be
+    // interactable with previous level's objects, which are obviously inactive by then
     private void OnSetNextLevelObstacles()
     {
-        _currentLevel = _levelController.Levels[_levelController.CurrentLevelIndex];
+        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
     }
 
     private void OnShowLoseScreen(ObjectView contactObject)
