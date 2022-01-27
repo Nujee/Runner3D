@@ -17,6 +17,6 @@ public class GameScreenController
 
     public void Update()
     {
-        _gameScreen._scoreText.text = "Your score: " + _pickupScoreController.Score.ToString();
+        _gameScreen._scoreText.text = _pickupScoreController.Score.ToString();
     }
 }

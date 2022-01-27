@@ -8,7 +8,7 @@ public class WinController : IDisposable
     private LevelController _levelController;
     private UIView _winScreen;
     private PickupScoreController _scoreContainer;
-    
+
     public WinController(ObjectView player, LevelController levelController, UIView winScreen,  PickupScoreController pickupScoreController)
     {
         _player = player;
@@ -17,13 +17,15 @@ public class WinController : IDisposable
         _winScreen = winScreen;
         _scoreContainer = pickupScoreController;
 
-        _currentLevel._finish.OnContact += OnShowWinScreen;
+        _player.OnContact += OnShowWinScreen;
         _levelController.OnNextLevel += OnSetNextLevelFinish;
 
         _winScreen._nextLevelButton.onClick.AddListener(HideWinScreen);
         _winScreen._nextLevelButton.onClick.AddListener(levelController.MoveToNextLevel);
         _winScreen._nextLevelButton.onClick.AddListener(SetPlayerToStart);
         _winScreen._nextLevelButton.onClick.AddListener(ResetScore);
+
+        _winScreen._nextLevelButton.onClick.AddListener(OnSetNextLevelFinish);
     }
 
     public void Dispose()
@@ -34,7 +36,7 @@ public class WinController : IDisposable
 
     private void OnShowWinScreen(ObjectView contactObject)
     {
-        if (contactObject == _player)
+        if (contactObject == _currentLevel._finish)
         {
             ShowWinScreen();
         }
@@ -44,8 +46,7 @@ public class WinController : IDisposable
     {
         Time.timeScale = 0;
         _winScreen.IsActive(true);
-        _winScreen._scoreText.text = "You won! Your total score is " + _scoreContainer.Score.ToString();
-        Debug.Log("WinScreen " + _levelController.CurrentLevelIndex);
+        _winScreen._scoreText.text = _scoreContainer.Score.ToString();
     }
 
     private void OnSetNextLevelFinish()
@@ -66,7 +67,6 @@ public class WinController : IDisposable
 
     private void ResetScore()
     {
-        _scoreContainer.Score = 0;
+       _scoreContainer.Score = 0;
     }
-
 }

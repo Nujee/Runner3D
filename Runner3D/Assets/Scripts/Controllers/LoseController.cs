@@ -19,10 +19,11 @@ public class LoseController : IDisposable
         _loseScreen = loseScreen;
         _scoreContainer = pickupScoreController;
 
+        _player.OnContact += OnShowLoseScreen;
+
         foreach (ObjectView obstacle in _currentLevel._obstacles)
         {
             _levelController.OnNextLevel += OnSetNextLevelObstacles;
-            obstacle.OnContact += OnShowLoseScreen;
         }
 
         _loseScreen._restartButton.onClick.AddListener(HideLoseScreen);
@@ -46,7 +47,7 @@ public class LoseController : IDisposable
 
     private void OnShowLoseScreen(ObjectView contactObject)
     {
-        if (contactObject == _player)
+        if (_currentLevel._obstacles.Contains(contactObject))
         {
             ShowLoseScreen();
         }
@@ -56,7 +57,7 @@ public class LoseController : IDisposable
     {
         Time.timeScale = 0;
         _loseScreen.IsActive(true);
-        _loseScreen._scoreText.text = "You lose! Your total score is " + _scoreContainer.Score.ToString();
+        _loseScreen._scoreText.text = _scoreContainer.Score.ToString();
     }
 
     private void HideLoseScreen()
