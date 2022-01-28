@@ -1,29 +1,47 @@
 ﻿using System;
 using UnityEngine;
 
-public class ObjectView : MonoBehaviour
+
+namespace Runner3D
 {
-    public Transform _transform;
-    public Collider _collider;
-    public Rigidbody _rigidbody;
-
-    private void Awake()
+    public class ObjectView : MonoBehaviour
     {
-        if (gameObject.GetComponent<Transform>())
-            _transform = gameObject.GetComponent<Transform>();
+        #region PublicFields
 
-        if (gameObject.GetComponent<Collider>())
-            _collider = gameObject.GetComponent<Collider>();
+        public Transform _transform;
+        public Collider _collider;
+        public Rigidbody _rigidbody;
 
-        if (gameObject.GetComponent<Rigidbody>())
-            _rigidbody = gameObject.GetComponent<Rigidbody>();
-    }
+        #endregion
 
-    public Action<ObjectView> OnContact { get; set; }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        ObjectView temp = other.gameObject.GetComponent<ObjectView>();
-        OnContact?.Invoke(temp);
+        #region Events
+
+        public Action<ObjectView> OnContact { get; set; }
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            if (gameObject.GetComponent<Transform>())
+                _transform = gameObject.GetComponent<Transform>();
+
+            if (gameObject.GetComponent<Collider>())
+                _collider = gameObject.GetComponent<Collider>();
+
+            if (gameObject.GetComponent<Rigidbody>())
+                _rigidbody = gameObject.GetComponent<Rigidbody>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            ObjectView temp = other.gameObject.GetComponent<ObjectView>();
+            OnContact?.Invoke(temp);
+        }
+
+        #endregion
     }
 }

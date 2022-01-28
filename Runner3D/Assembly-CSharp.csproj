@@ -65,8 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Controllers\GameScreenController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\LevelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LevelResultController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LoseController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ObstacleController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PickupController.cs" />
@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\Controllers\ScoreContainer.cs" />
     <Compile Include="Assets\Scripts\Controllers\WinController.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Utils\Utils.cs" />
     <Compile Include="Assets\Scripts\Views\LevelView.cs" />
     <Compile Include="Assets\Scripts\Views\ObjectView.cs" />
     <Compile Include="Assets\Scripts\Views\UIView.cs" />

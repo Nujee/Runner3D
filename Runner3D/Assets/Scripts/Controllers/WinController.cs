@@ -1,88 +1,92 @@
 ﻿using System;
 using UnityEngine;
 
-public class WinController : IDisposable
+
+namespace Runner3D
 {
-    #region Fields
-
-    private ObjectView _player;
-    private LevelView _currentLevel;
-    private LevelManager _levelManager;
-    private UIView _winScreen;
-    private ScoreContainer _scoreContainer;
-
-    #endregion
-
-
-    #region Constructors
-
-    public WinController(ObjectView player, LevelManager levelManager, UIView winScreen, ScoreContainer scoreContainer)
+    public class WinController : LevelResultController, IDisposable
     {
-        _player = player;
-        _levelManager = levelManager;
-        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
-        _winScreen = winScreen;
-        _scoreContainer = scoreContainer;
+        #region Fields
 
-        _player.OnContact += OnShowWinScreen;
-        _levelManager.OnNextLevel += OnSetNextLevelFinish;
+        private ObjectView _player;
+        private LevelView _currentLevel;
+        private LevelManager _levelManager;
+        private UIView _winScreen;
 
-        _winScreen._nextLevelButton.onClick.AddListener(HideWinScreen);
-        _winScreen._nextLevelButton.onClick.AddListener(levelManager.MoveToNextLevel);
-        _winScreen._nextLevelButton.onClick.AddListener(SetPlayerToStart);
-        _winScreen._nextLevelButton.onClick.AddListener(ResetScore);
-
-        _winScreen._nextLevelButton.onClick.AddListener(OnSetNextLevelFinish);
-    }
-
-    #endregion
+        #endregion
 
 
-    #region Methods
+        #region Constructors
 
-    public void Dispose()
-    {
-        _currentLevel._finish.OnContact -= OnShowWinScreen;
-        _levelManager.OnNextLevel -= OnSetNextLevelFinish;
-    }
-
-    private void OnShowWinScreen(ObjectView contactObject)
-    {
-        if (contactObject == _currentLevel._finish)
+        public WinController(UIView winScreen, ObjectView player, LevelManager levelManager)
         {
-            ShowWinScreen();
+            _winScreen = winScreen;
+            _player = player;
+            _levelManager = levelManager;
+            _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
+            
+
+            _player.OnContact += OnShowWinScreen;
+            _levelManager.OnNextLevel += OnSetNextLevelFinish;
+
+            _winScreen._nextLevelButton.onClick.AddListener(delegate { base.HideScreen(_winScreen); });
+            _winScreen._nextLevelButton.onClick.AddListener(levelManager.MoveToNextLevel);
+            _winScreen._nextLevelButton.onClick.AddListener(delegate { base.SetPlayerToStart(_player, _currentLevel); });
+            _winScreen._nextLevelButton.onClick.AddListener(base.ResetScore);
+
+            _winScreen._nextLevelButton.onClick.AddListener(OnSetNextLevelFinish);
         }
-    }
 
-    private void ShowWinScreen()
-    {
-        Time.timeScale = 0;
-        _winScreen.IsActive(true);
-        _winScreen._scoreText.text = _scoreContainer.Score.ToString();
-    }
-    // Updates _currentLevel (increased by 1) since OnNextLevel callback
-    // If not doing so, Player will only be interactable with previous level'
-    // objects, which are obviously inactive by then
-    private void OnSetNextLevelFinish()
-    {
-        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
-    }
+        #endregion
 
-    private void HideWinScreen()
-    {
-        Time.timeScale = 1;
-        _winScreen.IsActive(false);
-    }
 
-    private void SetPlayerToStart()
-    {
-        _player._transform.position = _currentLevel._startPosition.position;
-    }
+        #region Methods
 
-    private void ResetScore()
-    {
-       _scoreContainer.Score = 0;
-    }
+        public void Dispose()
+        {
+            _currentLevel._finish.OnContact -= OnShowWinScreen;
+            _levelManager.OnNextLevel -= OnSetNextLevelFinish;
+        }
 
-    #endregion
+        private void OnShowWinScreen(ObjectView contactObject)
+        {
+            if (contactObject == _currentLevel._finish)
+            {
+                base.ShowScreen(_winScreen);
+            }
+        }
+
+        private void ShowWinScreen()
+        {
+            Time.timeScale = 0;
+            _winScreen.IsActive(true);
+            _winScreen._scoreText.text = ScoreContainer.Score.ToString();
+        }
+
+        // This methods updates _currentLevel (increased by 1) since OnNextLevel callback. Otherwise Player will only be
+        // interactable with previous level's objects, which are obviously inactive by then
+        private void OnSetNextLevelFinish()
+        {
+            _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
+        }
+
+        private void HideWinScreen()
+        {
+            Time.timeScale = 1;
+            _winScreen.IsActive(false);
+        }
+
+        private void SetPlayerToStart()
+        {
+            _player._transform.position = _currentLevel._startPosition.position;
+        }
+
+        private void ResetScore()
+        {
+            ScoreContainer.Score = 0;
+            ScoreContainer.ScoreChanged();
+        }
+
+        #endregion
+    }
 }

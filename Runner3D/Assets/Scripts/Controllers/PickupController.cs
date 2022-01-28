@@ -1,64 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class PickupController : IDisposable
+
+namespace Runner3D
 {
-    #region Fields
-
-    private ObjectView _player;
-    private LevelManager _levelManager;
-    private LevelView _currentLevel;
-
-    #endregion
-
-
-    #region EventHandlers
-
-    public static event Action OnPickupEarn;
-
-    #endregion
-
-
-    #region Constructors
-
-    public PickupController (ObjectView player, LevelManager levelManager)
+    public class PickupController : IDisposable
     {
-        _player = player;
-        _levelManager = levelManager;
-        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
+        #region Fields
 
-        _levelManager.OnNextLevel += SetNextLevelPickups;
-        _player.OnContact += PickUp;
-    }
+        private ObjectView _player;
+        private LevelManager _levelManager;
+        private LevelView _currentLevel;
 
-    #endregion 
+        #endregion
 
 
-    #region Methods
+        #region EventHandlers
 
-    public void Dispose()
-    {
-        _player.OnContact -= PickUp;
-        _levelManager.OnNextLevel -= SetNextLevelPickups;
-    }
+        public static event Action OnPickupEarn;
 
-    // Updates _currentLevel (increased by 1) since OnNextLevel callback. Otherwise Player will only be
-    // interactable with previous level's objects, which are obviously inactive by then
-    private void SetNextLevelPickups()
-    {
-        _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
-    }
+        #endregion
 
-    private void PickUp(ObjectView contactObject)
-    {
-        if (_currentLevel._pickups.Contains(contactObject))
+
+        #region Constructors
+
+        public PickupController(ObjectView player, LevelManager levelManager)
         {
-            OnPickupEarn?.Invoke();
-            contactObject.gameObject.SetActive(false);
-        }
-    }
+            _player = player;
+            _levelManager = levelManager;
+            _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
 
-    #endregion
+            _levelManager.OnNextLevel += SetNextLevelPickups;
+            _player.OnContact += PickUp;
+        }
+
+        #endregion
+
+
+        #region Methods
+
+        public void Dispose()
+        {
+            _player.OnContact -= PickUp;
+            _levelManager.OnNextLevel -= SetNextLevelPickups;
+        }
+
+        // This methods updates _currentLevel (increased by 1) since OnNextLevel callback. Otherwise Player will only be
+        // interactable with previous level's objects, which are obviously inactive by then
+        private void SetNextLevelPickups()
+        {
+            _currentLevel = _levelManager.Levels[_levelManager.CurrentLevelIndex];
+        }
+
+        private void PickUp(ObjectView contactObject)
+        {
+            if (_currentLevel._pickups.Contains(contactObject))
+            {
+                OnPickupEarn?.Invoke();
+                ScoreContainer.ScoreChanged();
+                contactObject.gameObject.SetActive(false);
+            }
+        }
+
+        #endregion
+    }
 }
+
 

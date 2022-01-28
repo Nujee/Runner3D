@@ -511,7 +511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 277295659}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117464626
 GameObject:
@@ -1282,7 +1282,7 @@ Transform:
   m_Children:
   - {fileID: 42051160}
   m_Father: {fileID: 277295659}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &277295658
 GameObject:
@@ -1311,11 +1311,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 701816096}
-  - {fileID: 735082012}
   - {fileID: 262681293}
+  - {fileID: 735082012}
   - {fileID: 90686995}
   - {fileID: 1924016100}
+  - {fileID: 701816096}
   m_Father: {fileID: 1189402449}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2095,8 +2095,9 @@ MonoBehaviour:
   _gameScreen: {fileID: 688344639}
   _winScreen: {fileID: 2059757420}
   _loseScreen: {fileID: 1960693880}
-  _horizontalSensitivity: 7.8
-  _verticalVelocity: 3.9
+  _horizontalSensitivity: 8.8
+  _verticalVelocity: 13.4
+  _pickupValue: 100
 --- !u!4 &680092166
 Transform:
   m_ObjectHideFlags: 0
@@ -2258,7 +2259,7 @@ Transform:
   - {fileID: 1684574739}
   - {fileID: 1012334096}
   m_Father: {fileID: 277295659}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -3183,7 +3184,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997570734}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 3, z: 10}
@@ -3687,7 +3688,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177163261}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 3, z: 10}
@@ -5528,7 +5529,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 277295659}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1924016101
 BoxCollider:
@@ -5538,7 +5539,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924016099}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 10, y: 3, z: 10}
@@ -6002,7 +6003,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067338163}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
